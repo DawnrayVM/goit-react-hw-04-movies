@@ -1,14 +1,15 @@
-import { useCreateStyles } from 'react-jss';
 import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { fetchTrending } from '../services/movie-api';
+import { fetchTrending } from '../../components/services/movie-api';
 
-class MoviesPage extends Component {
+class Homepage extends Component {
     state = {
         moviesArray: [],
         currentPage: 1,
+        totalPages: 0,
         error: '',
     };
+
     componentDidMount() {
         fetchTrending()
             .then(({ page, results }) => {
@@ -21,7 +22,8 @@ class MoviesPage extends Component {
     }
     render() {
         return (
-            <div className="Movies-page">
+            <div className="homepage">
+                <button type="button">Go back</button>
                 <h2>Trending movies</h2>
                 <ul>
                     {this.state.moviesArray.map(movie => {
@@ -35,10 +37,9 @@ class MoviesPage extends Component {
                         );
                     })}
                 </ul>
-                <button type="button">{this.state.currentPage}</button>
             </div>
         );
     }
 }
 
-export default MoviesPage;
+export default Homepage;
