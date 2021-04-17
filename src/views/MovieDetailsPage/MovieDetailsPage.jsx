@@ -1,15 +1,12 @@
 import { Component } from 'react';
 import axios from 'axios';
 import { NavLink, Route, Switch } from 'react-router-dom';
+import { fetchMovieDetails } from '../../components/services/movie-api';
 
 class MovieDetailsPage extends Component {
     state = { movieDetails: {}, genres: [] };
     componentDidMount() {
-        axios
-            .get(
-                `
-                https://api.themoviedb.org/3/movie/${this.props.match.params.movieId}?api_key=2d2272085b6a086155bacb1413ae9080`,
-            )
+        fetchMovieDetails(this.props.match.params.movieId)
             .then(
                 ({
                     data: {
@@ -62,8 +59,9 @@ class MovieDetailsPage extends Component {
                 <img src={poster} />
                 <h2>Overview:</h2>
                 <p>{overview}</p>
-                <h2>Genres: {genres}</h2>
-                <p>Additional information</p>
+                <h2>Genres:</h2>
+                <p>{genres}</p>
+                <h3>Additional information</h3>
                 <ul className="movie-more-info">
                     <li>
                         <NavLink to={`${url}/cast/`}>Cast</NavLink>

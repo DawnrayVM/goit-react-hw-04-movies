@@ -8,9 +8,6 @@ const Navigation = () => (
         <li>
             <NavLink to="/movies">Movies</NavLink>
         </li>
-        {/* <li>
-            <NavLink to="/movies/:id">Movie</NavLink>
-        </li> */}
     </ul>
 );
 

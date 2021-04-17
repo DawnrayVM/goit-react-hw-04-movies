@@ -28,10 +28,7 @@ class Homepage extends Component {
                 <ul>
                     {this.state.moviesArray.map(movie => {
                         return (
-                            <NavLink
-                                to={`${this.props.match.url}/${movie.id}`}
-                                key={movie.id}
-                            >
+                            <NavLink to={`/movies/${movie.id}`} key={movie.id}>
                                 <li>{movie.title}</li>
                             </NavLink>
                         );

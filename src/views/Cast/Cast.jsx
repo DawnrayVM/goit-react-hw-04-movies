@@ -1,26 +1,37 @@
 import { useState, useEffect, useLayoutEffect, Component } from 'react';
 import { useCreateStyles } from 'react-jss';
 import { fetchCast } from '../../components/services/movie-api';
-import CastItem from '../../components/CastItem';
 
 const Cast = ({ match }) => {
     const [state, setState] = useState({ cast: [] });
     useLayoutEffect(() => {
-        console.log('did mount');
         fetchCast(match.params.movieId).then(({ cast }) => {
-            setState({ cast: cast });
+            setState({
+                cast: cast
+                    .filter(({ order }) => order <= 10)
+                    .map(({ id, name, profile_path, character }) => ({
+                        id,
+                        name,
+                        profile_path:
+                            'https://image.tmdb.org/t/p/w185' + profile_path,
+                        character,
+                    })),
+            });
         });
     }, []);
-    console.log('before render');
     return (
-        console.log('render'),
-        (
-            <section className="cast-container">
-                <ul>
-                    <CastItem data={state.cast} />
-                </ul>
-            </section>
-        )
+        <ul className="cast-container">
+            {state.cast.length > 0 &&
+                state.cast.map(data => {
+                    return (
+                        <li key={data.id}>
+                            <img src={data.profile_path} />
+                            <h3>{data.name}</h3>
+                            <p>Character: {data.character}</p>
+                        </li>
+                    );
+                })}
+        </ul>
     );
 };
 

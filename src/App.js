@@ -14,12 +14,15 @@ const App = () => {
             <Switch>
                 <Route exact path="/" component={Homepage} />
                 <Route exact path="/movies" component={MoviesPage} />
-
                 <Route path="/movies/:movieId" component={MovieDetailsPage} />
             </Switch>
             <Switch>
-                <Route path="/movies/:movieId/reviews" component={Reviews} />
-                <Route path="/movies/:movieId/cast" component={Cast} />
+                <Route
+                    exact
+                    path="/movies/:movieId/reviews"
+                    component={Reviews}
+                />
+                <Route exact path="/movies/:movieId/cast" component={Cast} />
             </Switch>
         </>
     );
