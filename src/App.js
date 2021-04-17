@@ -6,7 +6,6 @@ import MoviesPage from './views/MoviesPage';
 import MovieDetailsPage from './views/MovieDetailsPage';
 import Cast from './views/Cast';
 import Reviews from './views/Reviews';
-import SearchForm from './components/SearchForm/SearchForm';
 
 const App = () => {
     return (

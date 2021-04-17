@@ -1,36 +1,26 @@
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect, useLayoutEffect, Component } from 'react';
 import { useCreateStyles } from 'react-jss';
 import { fetchCast } from '../../components/services/movie-api';
+import CastItem from '../../components/CastItem';
 
 const Cast = ({ match }) => {
-    const [state, setState] = useState();
-    useEffect(() => {
-        console.log('mount');
+    const [state, setState] = useState({ cast: [] });
+    useLayoutEffect(() => {
+        console.log('did mount');
         fetchCast(match.params.movieId).then(({ cast }) => {
             setState({ cast: cast });
         });
     }, []);
-    console.log(state);
+    console.log('before render');
     return (
-        <section className="cast-container">
-            {/* {state.cast.length > 0
-                ? state.cast.map(({ name, character, profile_path, order }) => {
-                      if (order <= 10) {
-                          return (
-                              <li key={name}>
-                                  <img
-                                      src={`http://image.tmdb.org/t/p/w185${profile_path}`}
-                                  />
-                                  <h3>{name}</h3>
-                                  <p>{character}</p>
-                              </li>
-                          );
-                      }
-                  })
-                : null} */}
-            //*нужно создать тупой компонент и передать данные стейта для
-            разметки *//
-        </section>
+        console.log('render'),
+        (
+            <section className="cast-container">
+                <ul>
+                    <CastItem data={state.cast} />
+                </ul>
+            </section>
+        )
     );
 };
 
