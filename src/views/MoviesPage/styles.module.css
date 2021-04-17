@@ -1,0 +1,48 @@
+.container {
+    padding-top: 10;
+    padding-bottom: 10;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.homepageBox {
+    padding: 10px 40px;
+    background-color: #d6ffe8;
+    width: 1200px;
+    border-radius: 0 0 5px 5px;
+    list-style: none;
+}
+
+.goBackBtn {
+    border: 1px solid #006950;
+    padding: 5px 15px;
+    border-radius: 5px;
+    background-color: #2ecc71;
+    color: #006950;
+}
+.goBackBtn:hover {
+    color: #c7fff2;
+}
+
+.homepageList {
+    list-style: none;
+    padding: 0;
+}
+
+.homepageListItem {
+    margin-bottom: 5px;
+    text-decoration: none;
+}
+.homepageLink {
+    /* fontSize: 20, */
+    color: #006950;
+    text-decoration: none;
+}
+.homepageLink:hover {
+    text-decoration: underline;
+}
+/* .homepageLinkActive {
+        color: '#c7fff2',
+    },
+} */

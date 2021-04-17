@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { searchMovie } from '../../components/services/movie-api';
 import SearchForm from '../../components/SearchForm/SearchForm';
+import styles from './styles.module.css';
 
 class MoviesPage extends Component {
     state = {
@@ -38,22 +39,29 @@ class MoviesPage extends Component {
     }
     render() {
         return (
-            <section>
-                <h2>Search movies</h2>
-                <SearchForm onSubmit={this.submitHandler}></SearchForm>
-                <ul className="movies-list">
-                    {this.state.moviesArray.map(movie => {
-                        return (
-                            <NavLink
-                                to={`${this.props.match.url}/${movie.id}`}
-                                key={movie.id}
-                            >
-                                <li>{movie.title}</li>
-                            </NavLink>
-                        );
-                    })}
-                </ul>
-                {/* <button type="button">{this.state.currentPage}</button> */}
+            <section className={styles.container}>
+                <div className={styles.homepageBox}>
+                    <h2>Search movies</h2>
+                    <SearchForm onSubmit={this.submitHandler}></SearchForm>
+                    <ul className={styles.homepageList}>
+                        {this.state.moviesArray.map(movie => {
+                            return (
+                                <li
+                                    key={movie.id}
+                                    className={styles.homepageListItem}
+                                >
+                                    <NavLink
+                                        to={`${this.props.match.url}/${movie.id}`}
+                                        className={styles.homepageLink}
+                                    >
+                                        {movie.title}
+                                    </NavLink>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                    {/* <button type="button">{this.state.currentPage}</button> */}
+                </div>
             </section>
         );
     }

@@ -1,7 +1,9 @@
 import { Component } from 'react';
-import axios from 'axios';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import { fetchMovieDetails } from '../../components/services/movie-api';
+import styles from './styles.module.css';
+import Reviews from '../Reviews';
+import Cast from '../Cast';
 
 class MovieDetailsPage extends Component {
     state = { movieDetails: {}, genres: [] };
@@ -48,28 +50,47 @@ class MovieDetailsPage extends Component {
             overview,
             genres,
         } = this.state.movieDetails;
-        const { url } = this.props.match;
+        const { match } = this.props;
         return (
-            <section className="movie-container">
-                <button type="button">Go back</button>
-                <h1>
-                    Movie Details Page: {title} ({release_date})
-                </h1>
-                <p>User Score: {vote_average}</p>
-                <img src={poster} />
-                <h2>Overview:</h2>
-                <p>{overview}</p>
-                <h2>Genres:</h2>
-                <p>{genres}</p>
-                <h3>Additional information</h3>
-                <ul className="movie-more-info">
-                    <li>
-                        <NavLink to={`${url}/cast/`}>Cast</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to={`${url}/reviews/`}>Reviews</NavLink>
-                    </li>
-                </ul>
+            <section className={styles.container}>
+                <div className={styles.homepageBox}>
+                    <button type="button" className={styles.goBackBtn}>
+                        Go back
+                    </button>
+                    <div className={styles.movieDetails}>
+                        <img src={poster} />
+                        <div>
+                            <h1>
+                                {title} ({release_date})
+                            </h1>
+                            <p>User Score: {vote_average}</p>
+                            <h2>Overview:</h2>
+                            <p>{overview}</p>
+                            <h2>Genres:</h2>
+                            <p>{genres}</p>
+                            <h3>Additional information</h3>
+                            <ul className="movie-more-info">
+                                <li>
+                                    <NavLink to={`${match.url}/cast/`}>
+                                        Cast
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to={`${match.url}/reviews/`}>
+                                        Reviews
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <Switch>
+                        <Route
+                            path={`${match.path}/reviews`}
+                            component={Reviews}
+                        />
+                        <Route path={`${match.path}/cast`} component={Cast} />
+                    </Switch>
+                </div>
             </section>
         );
     }
