@@ -4,6 +4,7 @@ import { fetchMovieDetails } from '../../components/services/movie-api';
 import styles from './styles.module.css';
 import Reviews from '../Reviews';
 import Cast from '../Cast';
+import routes from '../../routes';
 
 class MovieDetailsPage extends Component {
     state = { movieDetails: {}, genres: [] };
@@ -40,7 +41,10 @@ class MovieDetailsPage extends Component {
             )
             .catch(error => console.log(error));
     }
-
+    handleGoBack = () => {
+        const { history, location } = this.props;
+        history.push(location?.state?.from || routes.movies);
+    };
     render() {
         const {
             title,
@@ -51,10 +55,15 @@ class MovieDetailsPage extends Component {
             genres,
         } = this.state.movieDetails;
         const { match } = this.props;
+        // console.log(match);
         return (
             <section className={styles.container}>
                 <div className={styles.homepageBox}>
-                    <button type="button" className={styles.goBackBtn}>
+                    <button
+                        type="button"
+                        className={styles.goBackBtn}
+                        onClick={this.handleGoBack}
+                    >
                         Go back
                     </button>
                     <div className={styles.movieDetails}>
@@ -71,12 +80,30 @@ class MovieDetailsPage extends Component {
                             <h3>Additional information</h3>
                             <ul className="movie-more-info">
                                 <li>
-                                    <NavLink to={`${match.url}/cast/`}>
+                                    <NavLink
+                                        to={{
+                                            pathname: `${match.url}/cast/`,
+                                            state: {
+                                                from: this.props.location,
+                                                query: this.props.location.state
+                                                    .query,
+                                            },
+                                        }}
+                                    >
                                         Cast
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to={`${match.url}/reviews/`}>
+                                    <NavLink
+                                        to={{
+                                            pathname: `${match.url}/reviews/`,
+                                            state: {
+                                                from: this.props.location,
+                                                query: this.props.location.state
+                                                    .query,
+                                            },
+                                        }}
+                                    >
                                         Reviews
                                     </NavLink>
                                 </li>

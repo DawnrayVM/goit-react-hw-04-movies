@@ -22,13 +22,9 @@ class Homepage extends Component {
             .catch(error => this.setState({ error: error }));
     }
     render() {
-        console.log(this.props);
         return (
             <section className={styles.container}>
                 <div className={styles.homepageBox}>
-                    {/* <button type="button" className={styles.goBackBtn}>
-                        Go back
-                    </button> */}
                     <h2>Trending today</h2>
                     <ul className={styles.homepageList}>
                         {this.state.moviesArray.map(movie => {
@@ -38,7 +34,12 @@ class Homepage extends Component {
                                     className={styles.homepageListItem}
                                 >
                                     <NavLink
-                                        to={`movies/${movie.id}`}
+                                        to={{
+                                            pathname: `movies/${movie.id}`,
+                                            // state: {
+                                            //     from: this.props.location,
+                                            // },
+                                        }}
                                         className={styles.homepageLink}
                                     >
                                         {movie.title}

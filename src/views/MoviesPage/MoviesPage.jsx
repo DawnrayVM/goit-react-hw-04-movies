@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import queryString from 'query-string';
 import { searchMovie } from '../../components/services/movie-api';
 import SearchForm from '../../components/SearchForm/SearchForm';
 import styles from './styles.module.css';
@@ -17,17 +18,25 @@ class MoviesPage extends Component {
         this.setState({ searchQuery: data });
     };
 
+    componentDidMount() {
+        const lastQuery = this.props.location.search;
+        const { q } = queryString.parse(lastQuery);
+        this.setState({ searchQuery: q });
+    }
+
     componentDidUpdate(prevProps, prevState) {
         const { searchQuery } = this.state;
         if (prevState.searchQuery !== searchQuery) {
             searchQuery
                 ? searchMovie(searchQuery)
-                      .then(({ results, page, total_pages }) =>
-                          this.setState({
-                              moviesArray: results,
-                              currentPage: page,
-                              totalPages: total_pages,
-                          }),
+                      .then(
+                          ({ results, page, total_pages }) =>
+                              this.setState({
+                                  moviesArray: results,
+                                  currentPage: page,
+                                  totalPages: total_pages,
+                              }),
+                          (this.props.location.search = `q=${searchQuery}`),
                       )
                       .catch(error => this.setState({ error: error }))
                 : this.setState({
@@ -51,7 +60,13 @@ class MoviesPage extends Component {
                                     className={styles.homepageListItem}
                                 >
                                     <NavLink
-                                        to={`${this.props.match.url}/${movie.id}`}
+                                        to={{
+                                            pathname: `${this.props.match.url}/${movie.id}`,
+                                            state: {
+                                                from: this.props.location,
+                                                query: this.state.searchQuery,
+                                            },
+                                        }}
                                         className={styles.homepageLink}
                                     >
                                         {movie.title}
