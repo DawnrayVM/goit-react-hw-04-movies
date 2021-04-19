@@ -1,14 +1,17 @@
 .container {
-    padding-top: 10;
-    padding-bottom: 10;
+    padding-top: 10px;
+    padding-bottom: 10px;
     display: flex;
     justify-content: center;
     flex-direction: row;
+    background-color: #effcff;
 }
-
+.homepageTitle {
+    color: #022b69;
+}
 .homepageBox {
     padding: 10px 40px;
-    background-color: #d6ffe8;
+    background-color: #effcff;
     width: 1200px;
     border-radius: 0 0 5px 5px;
     list-style: none;
@@ -35,14 +38,8 @@
     text-decoration: none;
 }
 .homepageLink {
-    /* fontSize: 20, */
-    color: #006950;
     text-decoration: none;
 }
 .homepageLink:hover {
     text-decoration: underline;
 }
-/* .homepageLinkActive {
-        color: '#c7fff2',
-    },
-} */

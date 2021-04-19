@@ -1,20 +1,21 @@
 .container {
-    padding-top: 10;
-    padding-bottom: 10;
+    padding-top: 10px;
+    padding-bottom: 10px;
     display: flex;
     justify-content: center;
     flex-direction: row;
 }
-
+.moviePageTitle {
+    color: #022b69;
+}
 .homepageBox {
     padding: 10px 40px;
-    background-color: #d6ffe8;
     width: 1200px;
     border-radius: 0 0 5px 5px;
     list-style: none;
 }
 
-.goBackBtn {
+/* .goBackBtn {
     border: 1px solid #006950;
     padding: 5px 15px;
     border-radius: 5px;
@@ -23,7 +24,7 @@
 }
 .goBackBtn:hover {
     color: #c7fff2;
-}
+} */
 
 .homepageList {
     list-style: none;
@@ -36,7 +37,7 @@
 }
 .homepageLink {
     /* fontSize: 20, */
-    color: #006950;
+    /* color: #006950; */
     text-decoration: none;
 }
 .homepageLink:hover {
@@ -46,3 +47,21 @@
         color: '#c7fff2',
     },
 } */
+
+/* 
+<div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <NavLink to={{pathname: `${this.props.match.url}/${movie.id}`, state: {
+                                                from: this.props.location,
+                                                query: this.state.searchQuery,
+                                            },
+                                        }}
+                                        className="btn btn-primary"
+                                    >
+                                        More info
+                                    </NavLink>
+  </div>
+</div> */

@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { fetchTrending } from '../../components/services/movie-api';
 import styles from './styles.module.css';
 
@@ -22,27 +24,28 @@ class Homepage extends Component {
             .catch(error => this.setState({ error: error }));
     }
     render() {
+        const { moviesArray } = this.state;
         return (
             <section className={styles.container}>
-                <div className={styles.homepageBox}>
-                    <h2>Trending today</h2>
+                <div className="container">
+                    <h2 className={styles.homepageTitle}>Trending today</h2>
                     <ul className={styles.homepageList}>
-                        {this.state.moviesArray.map(movie => {
+                        {moviesArray.map(({ id, title }) => {
                             return (
                                 <li
-                                    key={movie.id}
+                                    key={id}
                                     className={styles.homepageListItem}
                                 >
                                     <NavLink
                                         to={{
-                                            pathname: `movies/${movie.id}`,
+                                            pathname: `movies/${id}`,
                                             state: {
                                                 from: this.props.location,
                                             },
                                         }}
                                         className={styles.homepageLink}
                                     >
-                                        {movie.title}
+                                        {title}
                                     </NavLink>
                                 </li>
                             );
@@ -55,3 +58,8 @@ class Homepage extends Component {
 }
 
 export default Homepage;
+
+Homepage.proptype = {
+    id: PropTypes.number,
+    title: PropTypes.string,
+};

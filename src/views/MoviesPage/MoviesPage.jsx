@@ -1,11 +1,25 @@
 import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import queryString from 'query-string';
+import PropTypes from 'prop-types';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { searchMovie } from '../../components/services/movie-api';
 import SearchForm from '../../components/SearchForm/SearchForm';
 import styles from './styles.module.css';
 
 class MoviesPage extends Component {
+    static propTypes = {
+        match: PropTypes.shape({
+            isExact: PropTypes.bool,
+            params: PropTypes.object,
+            path: PropTypes.string,
+            url: PropTypes.string,
+        }),
+        history: PropTypes.object,
+        location: PropTypes.shape({
+            search: PropTypes.string,
+        }),
+    };
     state = {
         moviesArray: [],
         searchQuery: '',
@@ -49,8 +63,8 @@ class MoviesPage extends Component {
     render() {
         return (
             <section className={styles.container}>
-                <div className={styles.homepageBox}>
-                    <h2>Search movies</h2>
+                <div className="container">
+                    <h2 className={styles.moviePageTitle}>Search movies</h2>
                     <SearchForm onSubmit={this.submitHandler}></SearchForm>
                     <ul className={styles.homepageList}>
                         {this.state.moviesArray.map(movie => {

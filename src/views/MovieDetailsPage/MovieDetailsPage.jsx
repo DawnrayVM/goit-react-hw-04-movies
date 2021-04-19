@@ -1,8 +1,9 @@
 import { Component } from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
-// import { useState } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { css } from '@emotion/core';
 import RingLoader from 'react-spinners/RingLoader';
+import PropTypes from 'prop-types';
 import { fetchMovieDetails } from '../../components/services/movie-api';
 import styles from './styles.module.css';
 import Reviews from '../Reviews';
@@ -15,6 +16,22 @@ const override = css`
 `;
 
 class MovieDetailsPage extends Component {
+    static propTypes = {
+        match: PropTypes.shape({
+            isExact: PropTypes.bool,
+            params: PropTypes.shape({ movieId: PropTypes.string }),
+            path: PropTypes.string,
+            url: PropTypes.string,
+        }),
+        history: PropTypes.object,
+        location: PropTypes.shape({
+            state: PropTypes.shape({
+                from: PropTypes.object,
+                query: PropTypes.string,
+            }),
+        }),
+    };
+
     state = { movieDetails: {}, genres: [], isLoading: false };
     componentDidMount() {
         this.setState({ isLoading: true });
@@ -65,41 +82,43 @@ class MovieDetailsPage extends Component {
             genres,
         } = this.state.movieDetails;
         const { match } = this.props;
-        // console.log(match);
         return (
             <section className={styles.container}>
-                <div className={styles.homepageBox}>
+                <div className="container">
                     <button
                         type="button"
-                        className={styles.goBackBtn}
+                        className={`btn btn-outline-primary ${styles.goBackBtn}`}
                         onClick={this.handleGoBack}
                     >
                         Go back
                     </button>
-
                     {this.state.isLoading ? (
                         <RingLoader
                             css={override}
-                            color="#006950"
+                            color="#0d6efd"
                             loading={this.state.isLoading}
-                            size="150"
+                            size="150px"
                         />
                     ) : (
                         <>
                             <div className={styles.movieDetails}>
-                                <img src={poster} />
-                                <div>
+                                <img src={poster} alt={title} />
+                                <div className={styles.movieDetailsContainer}>
                                     <h1>
                                         {title} ({release_date})
                                     </h1>
-                                    <p>User Score: {vote_average}</p>
+                                    <p className={styles.movieDetailsPageTitle}>
+                                        IMDB Rate: {vote_average}
+                                    </p>
                                     <h2>Overview:</h2>
                                     <p>{overview}</p>
                                     <h2>Genres:</h2>
                                     <p>{genres}</p>
                                     <h3>Additional information</h3>
-                                    <ul className="movie-more-info">
-                                        <li>
+                                    <ul className={styles.movieMoreInfo}>
+                                        <li
+                                            className={styles.movieMoreInfoItem}
+                                        >
                                             <NavLink
                                                 to={{
                                                     pathname: `${match.url}/cast/`,
@@ -111,6 +130,7 @@ class MovieDetailsPage extends Component {
                                                             .query,
                                                     },
                                                 }}
+                                                className="btn btn-primary"
                                             >
                                                 Cast
                                             </NavLink>
@@ -127,6 +147,7 @@ class MovieDetailsPage extends Component {
                                                             .query,
                                                     },
                                                 }}
+                                                className="btn btn-primary"
                                             >
                                                 Reviews
                                             </NavLink>

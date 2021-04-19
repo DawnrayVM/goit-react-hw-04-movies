@@ -5,6 +5,7 @@ const useStyles = createUseStyles({
     container: {
         display: 'flex',
         justifyContent: 'center',
+        backgroundColor: '#f8f9fa',
     },
 });
 

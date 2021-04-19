@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import queryString from 'query-string';
-import { createUseStyles } from 'react-jss';
 import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SearchForm = ({ onSubmit }) => {
     const { search } = useLocation();
@@ -24,16 +25,26 @@ const SearchForm = ({ onSubmit }) => {
     };
 
     return (
-        <form className="search-form" onSubmit={submitForm}>
+        <form className="d-flex" onSubmit={submitForm}>
             <input
                 type="text"
                 autoComplete="off"
                 onChange={getInputValue}
                 id="searchInput"
+                className="form-control me-2"
             />
-            <button type="submit">Search</button>
+            <button type="submit" className="btn btn-outline-primary">
+                Search
+            </button>
         </form>
     );
 };
 
 export default SearchForm;
+
+SearchForm.propTypes = {
+    submitForm: PropTypes.func,
+    getInputValue: PropTypes.func,
+    onSubmit: PropTypes.func,
+    inputValue: PropTypes.string,
+};
