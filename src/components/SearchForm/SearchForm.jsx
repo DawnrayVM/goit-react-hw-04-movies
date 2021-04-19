@@ -25,7 +25,12 @@ const SearchForm = ({ onSubmit }) => {
 
     return (
         <form className="search-form" onSubmit={submitForm}>
-            <input type="text" onChange={getInputValue} id="searchInput" />
+            <input
+                type="text"
+                autoComplete="off"
+                onChange={getInputValue}
+                id="searchInput"
+            />
             <button type="submit">Search</button>
         </form>
     );

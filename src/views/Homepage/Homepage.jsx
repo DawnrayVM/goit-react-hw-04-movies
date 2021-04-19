@@ -36,9 +36,9 @@ class Homepage extends Component {
                                     <NavLink
                                         to={{
                                             pathname: `movies/${movie.id}`,
-                                            // state: {
-                                            //     from: this.props.location,
-                                            // },
+                                            state: {
+                                                from: this.props.location,
+                                            },
                                         }}
                                         className={styles.homepageLink}
                                     >

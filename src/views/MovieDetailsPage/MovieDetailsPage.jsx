@@ -1,14 +1,23 @@
 import { Component } from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
+// import { useState } from "react";
+import { css } from '@emotion/core';
+import RingLoader from 'react-spinners/RingLoader';
 import { fetchMovieDetails } from '../../components/services/movie-api';
 import styles from './styles.module.css';
 import Reviews from '../Reviews';
 import Cast from '../Cast';
 import routes from '../../routes';
 
+const override = css`
+    display: block;
+    margin: 0 auto;
+`;
+
 class MovieDetailsPage extends Component {
-    state = { movieDetails: {}, genres: [] };
+    state = { movieDetails: {}, genres: [], isLoading: false };
     componentDidMount() {
+        this.setState({ isLoading: true });
         fetchMovieDetails(this.props.match.params.movieId)
             .then(
                 ({
@@ -36,6 +45,7 @@ class MovieDetailsPage extends Component {
                                 })
                                 .join(', '),
                         },
+                        isLoading: false,
                     });
                 },
             )
@@ -66,57 +76,76 @@ class MovieDetailsPage extends Component {
                     >
                         Go back
                     </button>
-                    <div className={styles.movieDetails}>
-                        <img src={poster} />
-                        <div>
-                            <h1>
-                                {title} ({release_date})
-                            </h1>
-                            <p>User Score: {vote_average}</p>
-                            <h2>Overview:</h2>
-                            <p>{overview}</p>
-                            <h2>Genres:</h2>
-                            <p>{genres}</p>
-                            <h3>Additional information</h3>
-                            <ul className="movie-more-info">
-                                <li>
-                                    <NavLink
-                                        to={{
-                                            pathname: `${match.url}/cast/`,
-                                            state: {
-                                                from: this.props.location,
-                                                query: this.props.location.state
-                                                    .query,
-                                            },
-                                        }}
-                                    >
-                                        Cast
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink
-                                        to={{
-                                            pathname: `${match.url}/reviews/`,
-                                            state: {
-                                                from: this.props.location,
-                                                query: this.props.location.state
-                                                    .query,
-                                            },
-                                        }}
-                                    >
-                                        Reviews
-                                    </NavLink>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <Switch>
-                        <Route
-                            path={`${match.path}/reviews`}
-                            component={Reviews}
+
+                    {this.state.isLoading ? (
+                        <RingLoader
+                            css={override}
+                            color="#006950"
+                            loading={this.state.isLoading}
+                            size="150"
                         />
-                        <Route path={`${match.path}/cast`} component={Cast} />
-                    </Switch>
+                    ) : (
+                        <>
+                            <div className={styles.movieDetails}>
+                                <img src={poster} />
+                                <div>
+                                    <h1>
+                                        {title} ({release_date})
+                                    </h1>
+                                    <p>User Score: {vote_average}</p>
+                                    <h2>Overview:</h2>
+                                    <p>{overview}</p>
+                                    <h2>Genres:</h2>
+                                    <p>{genres}</p>
+                                    <h3>Additional information</h3>
+                                    <ul className="movie-more-info">
+                                        <li>
+                                            <NavLink
+                                                to={{
+                                                    pathname: `${match.url}/cast/`,
+                                                    state: {
+                                                        from: this.props
+                                                            .location,
+                                                        query: this.props
+                                                            .location.state
+                                                            .query,
+                                                    },
+                                                }}
+                                            >
+                                                Cast
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink
+                                                to={{
+                                                    pathname: `${match.url}/reviews/`,
+                                                    state: {
+                                                        from: this.props
+                                                            .location,
+                                                        query: this.props
+                                                            .location.state
+                                                            .query,
+                                                    },
+                                                }}
+                                            >
+                                                Reviews
+                                            </NavLink>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <Switch>
+                                <Route
+                                    path={`${match.path}/reviews`}
+                                    component={Reviews}
+                                />
+                                <Route
+                                    path={`${match.path}/cast`}
+                                    component={Cast}
+                                />
+                            </Switch>
+                        </>
+                    )}
                 </div>
             </section>
         );
